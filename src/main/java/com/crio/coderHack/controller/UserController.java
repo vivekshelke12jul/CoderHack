@@ -4,6 +4,7 @@ import com.crio.coderHack.exchanges.RegisterUserRequest;
 import com.crio.coderHack.exchanges.UpdateUserRequest;
 import com.crio.coderHack.model.User;
 import com.crio.coderHack.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +28,12 @@ public class UserController {
     }
 
     @PostMapping()
-    public User registerUser(@RequestBody RegisterUserRequest registerUserRequest){
+    public User registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws Exception{
         return userService.registerUser(registerUserRequest);
     }
 
     @PutMapping()
-    public User updateUser(UpdateUserRequest updateUserRequest){
+    public User updateUser(@Valid @RequestBody UpdateUserRequest updateUserRequest){
         return userService.updateUser(updateUserRequest);
     }
 
@@ -40,6 +41,5 @@ public class UserController {
     public User deleteUserById(@PathVariable String userId){
         return userService.deleteUserById(userId);
     }
-
 
 }

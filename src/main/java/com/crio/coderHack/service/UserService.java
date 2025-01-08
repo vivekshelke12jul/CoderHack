@@ -12,7 +12,7 @@ public interface UserService {
 
     public User getUserByUserId(String id);
 
-    User registerUser(RegisterUserRequest registerUserRequest);
+    User registerUser(RegisterUserRequest registerUserRequest) throws Exception;
 
     User updateUser(UpdateUserRequest updateUserRequest);
 

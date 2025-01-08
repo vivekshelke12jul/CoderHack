@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllByOrderByScoreDesc();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User registerUser(RegisterUserRequest registerUserRequest) {
+    public User registerUser(RegisterUserRequest registerUserRequest) throws Exception {
         String userId = registerUserRequest.getUserId();
         if(userRepository.existsByUserId(userId)){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User already exists with userId:" + userId + ". Please choose another userId");
