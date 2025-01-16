@@ -1,5 +1,0 @@
-spring.application.name=coderHack
-
-spring.data.mongodb.uri=mongodb://localhost:27017/coder_hack
-
-#logging.level.org.springframework.web=trace

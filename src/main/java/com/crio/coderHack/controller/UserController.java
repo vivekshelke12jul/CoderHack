@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public User registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws Exception{
+    public User registerUser(@Valid @RequestBody RegisterUserRequest registerUserRequest) throws Exception {
         return userService.registerUser(registerUserRequest);
     }
 

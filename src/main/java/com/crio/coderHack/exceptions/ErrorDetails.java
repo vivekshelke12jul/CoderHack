@@ -17,4 +17,5 @@ public class ErrorDetails {
 //    private String exception_name;  //MethodArgumentNotValidException
     private String message;         //User not found with id : 1
     private String path;            //      /users/1
+//    private Exception ex;
 }

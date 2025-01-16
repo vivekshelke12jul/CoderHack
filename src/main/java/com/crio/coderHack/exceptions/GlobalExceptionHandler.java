@@ -1,5 +1,6 @@
 package com.crio.coderHack.exceptions;
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,11 @@ public class GlobalExceptionHandler {
                 exception.getBody().getDetail(),
                 req.getDescription(false));
 
-        return new ResponseEntity<ErrorDetails>(errorDetails, status);
+        return new ResponseEntity<>(errorDetails, status);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDetails> handleClientErrorException(MethodArgumentNotValidException exception, WebRequest req){
-
+    public ResponseEntity<ErrorDetails> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, WebRequest req){
 
         HttpStatus status = (HttpStatus)exception.getStatusCode();
         FieldError error = exception.getBindingResult().getFieldErrors().getFirst();
@@ -42,10 +42,21 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(),
 //                exception.getClass().getSimpleName(),
                 error.getDefaultMessage(),
-                req.getDescription(false));
-
-
-        return new ResponseEntity<ErrorDetails>(errorDetails, status);
+                req.getDescription(false)
+        );
+        return new ResponseEntity<>(errorDetails, status);
     }
 
+    @ExceptionHandler(UnrecognizedPropertyException.class)
+    public ResponseEntity<ErrorDetails> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex) {
+        String unknownField = ex.getPropertyName(); // Get the name of the unknown field
+        String message = "Only score is updatable. Unknown property: '" + unknownField + "' in the request body. Please send only userId and score.";
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                message,
+                null
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

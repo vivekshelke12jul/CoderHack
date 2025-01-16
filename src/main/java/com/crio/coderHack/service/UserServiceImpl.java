@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService{
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User already exists with userId:" + userId + ". Please choose another userId");
         }
         User user = modelMapper.map(registerUserRequest, User.class);
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 
     @Override
@@ -63,17 +64,16 @@ public class UserServiceImpl implements UserService{
             badges = List.of(
                     Badge.CODE_NINJA,
                     Badge.CODE_CHAMP,
-                    Badge.CODE_MASTER
-            );
+                    Badge.CODE_MASTER);
         }
 
         user.setScore(score);
         user.setBadges(badges);
         return userRepository.save(user);
     }
-
     @Override
     public User deleteUserById(String userId) {
+    // TODO :use existBy
         getUserByUserId(userId);
         return userRepository.deleteByUserId(userId);
     }

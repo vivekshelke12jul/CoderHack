@@ -1,11 +1,15 @@
 package com.crio.coderHack.exchanges;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
+@JsonIgnoreProperties(ignoreUnknown = false)
 @Data
+@AllArgsConstructor
 public class UpdateUserRequest {
 
     @NotBlank(message = "UserId cant be null, empty or blank")
